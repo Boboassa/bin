@@ -1,0 +1,95 @@
+#!/bin/sh
+#
+# a simple script to create new file templates
+#
+# TODO: add file already exists check
+#       add a way of opening vim if no filename is given
+#       add option to specify only the language and filename
+#           instead of typing -l and -f flags manually
+
+usage() {
+printf 'Usage: %s [OPTION]... FILE\n' "${0##*/}"
+cat <<EOF
+  
+  [-h --help] display this help message
+  [-f --file-name FILE...] specify name of file(s) to create
+  [-l --language <c|py|html|md|ms|me>] specify language of file
+  [-n --no-edit] only create file without editing it
+EOF
+}
+
+main() {
+    #noedit=1
+while getopts ":f:l:hn" o; do
+    case "${o}" in
+        h)
+            usage
+            ;;
+        f)
+            filename=${OPTARG}
+            ;;
+        l)
+            lang=${OPTARG}
+            ;;
+        n)
+            noedit=1
+            ;;
+        *)
+            usage
+            exit 1;
+    esac
+done
+
+case ${lang} in
+    c)
+    new_c
+    ;;
+    py|python)
+    new_python
+    ;;
+    md)
+    new_md
+    ;;
+    html)
+    new_html
+    ;;
+    #roff)
+    #new_roff
+    #;;
+    me)
+    new_me
+    ;;
+    ms)
+    new_ms
+esac
+
+[ $noedit ] || vim "${filename:-new.c}"
+
+}
+
+new_c() {
+cat > "${filename:-new.c}" <<EOF
+/*
+ * <++>
+*/
+#include <stdio.h>
+int main()
+{
+    <++>
+    return 0;
+}
+EOF
+}
+new_python() {
+cat <<EOF
+hello, new python program!
+EOF
+}
+new_html() {
+cat <<EOF
+hello, new html program!
+EOF
+}
+
+
+main "$@"

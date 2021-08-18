@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# xbacklight and dwmblocks wrapper to change brightness
+#
+
+# Set some variables to make changes easier
+amount=9
+default=28
+steps=10
+time=300
+defaultopts="xbacklight -time ${time} -steps ${steps}"
+
+usage() {
+    >&2 printf "Usage: ${0##*/} [-h help] [-i increase] [-d decrease] [-s set] [-r reset to default value]\n"
+}
+
+case ${1#-} in
+    h)
+        usage
+        ;;
+    i)
+        ${defaultopts} -inc ${amount}
+        ;;
+    d)
+        ${defaultopts} -dec ${amount}
+        ;;
+    s)
+        ${defaultopts} -set "$2"
+        ;;
+    r)
+        ${defaultopts} -set ${default}
+        ;;
+    *)
+        usage && exit 1
+esac
+
+# kill dwmblocks backlight process to update the status bar
+kill -42 $(pidof dwmblocks)

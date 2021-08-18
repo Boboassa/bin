@@ -1,0 +1,16 @@
+#!/bin/bash
+#Battery script for dwmblocks
+
+capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+
+status=$(cat /sys/class/power_supply/BAT0/status)
+
+case $status in
+    "Full") status="" ;;
+    "Discharging") status="" ;;
+    "Charging") status="" ;;
+    "Not charging") status="" ;;
+    "Unknown") status="" ;;
+esac
+
+printf '%s %s%%' "$status" "$capacity"

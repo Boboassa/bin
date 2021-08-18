@@ -1,0 +1,6 @@
+#!/bin/bash
+# Time script for dwmblocks
+
+time="$(date '+%R')"
+
+printf " $time"

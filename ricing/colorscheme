@@ -1,0 +1,162 @@
+#!/bin/sh
+#
+# script called inside the schemes from ./themes to quickly change color themes
+#
+# This script inspired by:
+# https://github.com/mitchweaver
+#
+# the original scripts are rewritten from the ground up removing some
+# functionalities, some parts are copied
+
+usage(){
+    >&2 printf 'Usage: %s [-h help] [schemefile]\n' "${0##*/}"
+    exit 1
+}
+
+# Should probably be its own script... but, oh well...
+build(){
+    cd ~/repos/my-st/st && sudo make clean install
+    cd -
+    cd ~/repos/my-dwm/dwm && sudo make clean install
+    cd -
+}
+
+# generate the different header and config files
+
+gen_st() {
+cat > "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/st-color.h << EOF
+static const char *colorname[] = {
+    "$color0", // color 0
+    "$color1", // color 1
+    "$color2", // color 2
+    "$color3", // color 3
+    "$color4", // color 4
+    "$color5", // color 5
+    "$color6", // color 6
+    "$color7", // color 7
+    "$color8", // color 8
+    "$color9", // color 9
+    "$color10", // color 10
+    "$color11", // color 11
+    "$color12", // color 12
+    "$color13", // color 13
+    "$color14", // color 14
+    "$color15", // color 15
+    [255] = 0,
+
+    /* more colors can be added after 255 for use with DefaultXX */
+    "$background", // color 256
+    "$foreground", // color 257
+    "$cursor", // color 258
+    "$selbg", // color 259
+    "$invcursor", // color 260
+};
+EOF
+}
+
+gen_dwm() {
+cat > "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/dwm-color.h << EOF
+static const char foreground[]        = "$foreground";
+static const char background[]        = "$background";
+static const char selectedbg[]        = "$selbg";
+static const char selectedfg[]        = "$selfg";
+static const char border[]            = "$border";
+static const unsigned int baralpha    = 0x80;
+static const unsigned int borderalpha = OPAQUE;
+static const char *colors[][3]        = {
+    /*               fg         bg         border   */
+    [SchemeNorm] = { foreground, background, background },
+    [SchemeSel]  = { selectedbg, background, background },
+    [SchemeStatus]  = { foreground, background,  "#000000"  },
+    [SchemeTagsSel]  = { selectedfg, background, "#000000"  },
+    [SchemeTagsNorm]  = { foreground, background, "#000000"  },
+    [SchemeInfoSel]  = { foreground, background, "#000000"  },
+    [SchemeInfoNorm]  = { foreground, background, "#000000"  },
+};
+
+static const unsigned int alphas[][3]      = {
+    /*               fg      bg        border     */
+    [SchemeNorm] = { OPAQUE, baralpha, borderalpha },
+    [SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+    [SchemeStatus]  = { OPAQUE, baralpha, 0 },
+    [SchemeTagsSel]  = { OPAQUE, baralpha, 0 },
+    [SchemeTagsNorm]  = { OPAQUE, baralpha, 0 },
+    [SchemeInfoSel]  = { OPAQUE, baralpha, 0 },
+    [SchemeInfoNorm]  = { OPAQUE, baralpha, 0 },
+};
+EOF
+}
+
+gen_zathura() {
+cat > "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/zathura-color << EOF
+set completion-bg "$background"
+set completion-fg "$foreground"
+set completion-group-bg "$background"
+set completion-group-fg "$selfg"
+set completion-highlight-bg "$background"
+set completion-highlight-fg "$foreground"
+
+set default-fg "$foreground"
+set recolor-darkcolor "$foreground"
+
+set inputbar-bg "$background"
+set inputbar-fg "$foreground"
+
+set notification-bg "$background"
+set notification-fg "$foreground"
+set notification-error-bg "$selbg"
+set notification-error-fg "$selfg"
+set notification-warning-bg "$selbg"
+set notification-warning-fg "$selfg"
+
+set statusbar-fg "$foreground"
+
+set index-bg "$background"
+set index-fg "$foreground"
+set index-active-bg "$background"
+set index-active-fg "$foreground"
+
+set render-loading-bg "$background"
+set render-loading-fg "$foreground"
+EOF
+}
+
+gen_files() {
+    gen_st
+    gen_dwm
+    gen_zathura
+#    gen_qutebrowser
+#    gen_startpage
+}
+
+# [to be implemented] fzf to choose a scheme
+#interactive() {
+# find -f
+#}
+
+main() {
+# If the folder doesn't exist, create one
+case ${1#-} in
+    h)
+        usage
+        ;;
+# [to be implemented] fzf to choose a scheme
+#    i)
+#        interactive
+#        ;;
+    *)
+        if [ -f $HOME/.local/bin/ricing/themes/"$1" ] ; then
+            . $HOME/.local/bin/ricing/themes/"$1"
+
+            [ ! -d $XDG_CACHE_HOME/themes/ ] && \
+            mkdir -pv "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/
+
+            gen_files
+            build
+        else
+            usage
+        fi
+esac
+}
+
+main "$@"

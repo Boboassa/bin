@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# Inspired by:
+# http://github.com/mitchweaver/bin
+#
+# wrapper for pamixer and dwmblocks modules
+#
+
+
+# Print to standard error (>&2) the name of the script (${0##*/}) and synopsis
+usage() {
+    >&2 printf 'Usage: %s\n' "${0##*/} [-h help] [-i increase] [-d decrease] [-m toggle mute] [-s set]"
+}
+
+# Check for flags and act accordingly
+case ${1#-} in
+    h)
+        usage
+        ;;
+    i)
+        pamixer -i 5
+        ;;
+    d)
+        pamixer -d 5
+        ;;
+    m)
+        pamixer -t
+        ;;
+    s)
+        pamixer --set-volume "$2"
+        ;;
+    *)
+        usage && exit 1
+esac
+
+# kill dwmblocks volume process to update the status bar
+kill -43 $(pidof dwmblocks)
+

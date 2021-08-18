@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Volume script for dwmblocks
+
+volume="$(pamixer --get-volume)"
+
+status="$(pamixer --get-mute)"
+
+if [ "$status" = true ]; then
+    icon="ﱝ"
+    volume="--"
+elif [ "$volume" -lt "10" ] ; then
+    icon="奄"
+    [ "$volume" -eq "0" ] && icon="ﱝ"
+    volume=0$volume
+elif [ "$volume" -lt "40" ]; then
+    icon="奔"
+else
+    icon="墳"
+fi
+
+
+printf '%s %s%%' "$icon" "$volume"
+#echo "$icon $volume%"

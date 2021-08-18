@@ -1,0 +1,6 @@
+#!/bin/bash
+# Date script for dwmblocks
+
+date="$(date '+%a %d %b')"
+
+printf " $date"
