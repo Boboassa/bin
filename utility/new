@@ -10,7 +10,6 @@
 usage() {
 printf 'Usage: %s [OPTION]... FILE\n' "${0##*/}"
 cat <<EOF
-  
   [-h --help] display this help message
   [-f --file-name FILE...] specify name of file(s) to create
   [-l --language <c|py|html|md|ms|me>] specify language of file
