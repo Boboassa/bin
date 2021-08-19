@@ -2,7 +2,7 @@
 
 ## A collection of my scripts
 
-I am just starting out with shell scripting, so any help or improvement is
+I am just starting out with shell scripting, so any help or suggestion is
 welcome!
 
 ## Acknowledgements
