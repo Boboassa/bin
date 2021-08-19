@@ -1,0 +1,98 @@
+#!/bin/sh
+#
+# adaptation of the same script from https://github.com/mitchweaver/bin
+#
+# sct - screen color temperature - wrapper
+#
+
+usage() {
+printf 'Usage: %s [OPTION] NUM\n' "${0##*/}"
+cat <<EOF
+  [-h help] display this help message
+  [-d decrease] decrease temperature by NUM
+  [-i increase] increase temperature by NUM
+  [-t toggle] toggle dark period mode
+  [-s set] set temperature to NUM
+  no arguments sets color temperature to default
+EOF
+}
+
+notify() {
+    dunstify -C 1337 && \
+    dunstify -r 1337 "Screen color" \
+        "Temperature set to $temp"
+}
+
+clamp() {
+    [ "$temp" -lt "$SCT_TEMP_MIN" ] && temp=$SCT_TEMP_MIN
+    [ "$temp" -gt "$SCT_TEMP_MAX" ] && temp=$SCT_TEMP_MAX
+}
+
+# the current temperature is stored in the .cache/ folder
+
+file="${XDG_CACHE_HOME:-${HOME}/.cache}"/screen-temp
+
+# If file doesn't exist create it
+touch "$file"
+
+read -r temp < "$file"
+
+# Set defaults
+  # A quick tip learned from:
+  # http://github.com/mitchweaver/bin
+  # it uses : that does nothing (should be an alias to true if I understand
+  # correctly) to assign a value to t only if t is not set.
+  # This is a really compact and easy way of setting a variable if it's not
+  # already set avoiding controls and multiple commands
+
+: "${SCT_TEMP_MIN:=1000}"
+: "${SCT_TEMP_LOW:=2000}"
+: "${SCT_TEMP_DEF:=6500}"
+: "${SCT_TEMP_MAX:=10000}"
+
+# sct only sets temperatures in 500K increments and in between values are
+# "interpolated, idk what that means but I'm not going to set a variable
+# for the interval and just hard code the interval with value of 500.
+
+: "${temp:=$SCT_TEMP_DEF}"
+
+
+case ${1#-} in
+    h)
+        usage
+        ;;
+    t)
+        if [ "$temp" -gt "$SCT_TEMP_LOW" ] ; then
+            temp=$SCT_TEMP_MIN
+            dunstify -C 1337 && \
+            dunstify -r 1337 "Dark period mode ON" \
+                "Temperature set to $temp"
+        else
+            temp=$SCT_TEMP_DEF
+            dunstify -C 1337 && \
+            dunstify -r 1337 "Dark period mode OFF" \
+                "Temperature set to $temp"
+        fi
+        ;;
+    i)
+        temp=$(( temp + ${2:-500} ))
+        clamp
+        notify
+        ;;
+    d)
+        temp=$(( temp - ${2:-500} ))
+        clamp
+        notify
+        ;;
+    s)
+        temp="$2"
+        clamp
+        notify
+        ;;
+    *)
+        temp=$SCT_TEMP_DEF && notify
+    esac
+
+echo "$temp" > "$file"
+
+exec sct "$temp" > /dev/null
