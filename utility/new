@@ -52,17 +52,11 @@ case ${lang} in
     html)
     new_html
     ;;
-    #roff)
-    #new_roff
-    #;;
-    me)
-    new_me
-    ;;
-    ms)
-    new_ms
+    sh)
+    new_shell
 esac
 
-[ $noedit ] || vim "${filename:-new.c}"
+[ $noedit ] || vim "${filename:-new*}"
 
 }
 
@@ -79,7 +73,24 @@ int main()
 }
 EOF
 }
+new_shell() {
+cat > "${filename:-new.sh}" <<EOF
+#!/bin/sh
+#
+# <++>
+#
+
+usage() {
+printf 'Usage: %s [<++>] [<++>] [<++>]\n' "${0##*/}"
+}
+main() {
+<++>
+}
+EOF
+chmod 755 "${filename:-new.sh}"
+}
 new_python() {
+cat > "${filename:-new.py}" <<EOF
 cat <<EOF
 hello, new python program!
 EOF
