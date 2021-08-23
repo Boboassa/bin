@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# A program launcher with fzfmenu
+#
+
+usage() {
+printf 'Usage: %s [-h help] [-o open] [-]\n' "new"
+}
+main() {
+    case "${1#-}" in
+        h)
+            usage
+            ;;
+        o)
+            open
+            ;;
+
+    esac
+}
+
+open() {
+    exec $(compgen -c | sort -u | fzfmenu)
+}
+
+main "$1"
