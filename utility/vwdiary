@@ -1,11 +1,12 @@
 #!/bin/sh
 
-filename="$HOME/vimwiki/diary/$(date +%Y-%m-%d).wiki"
+diarydir="$HOME/vimwiki/diary"
+filename="$diarydir/$(date +%Y-%m-%d).wiki"
 
 if [ ! -f $filename ]; then
-    printf '# Notes for %s\n' "$(date +%Y-%m-%d)" > $filename
-    lastfile=$(ls $HOME/vimwiki/diary/ | tail -n 2 | head -n 1)
-    printf 'Last note: [[%s]]' "$(basename $lastfile .wiki)" >> $filename
+    printf '# Notes for %s\n\n' "$(date +%Y-%m-%d)" > $filename
+    lastfile=$(ls $diarydir | tail -n 2 | head -n 1)
+    printf 'Last note: [[%s]]\n' "$(basename $lastfile .wiki)" >> $filename
 fi
 
 printf '\n\n## %s\n\n' "$(date +%H:%M)" >> $filename
