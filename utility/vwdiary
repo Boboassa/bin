@@ -1,12 +1,11 @@
 #!/bin/sh
 
-noteFilename="$HOME/vimwiki/diary/$(date +%Y-%m-%d).wiki"
+filename="$HOME/vimwiki/diary/$(date +%Y-%m-%d).wiki"
 
-if [ ! -f $noteFilename ]; then
-    echo "= Notes for $(date +%Y-%m-%d) =" > $noteFilename
+if [ ! -f $filename ]; then
+    printf '# Notes for %s' "$(date +%Y-%m-%d)" > $filename
 fi
 
-vim -c "norm Go" \
-    -c "norm Go== $(date +%H:%M) ==" \
-    -c "norm G2o" \
-    -c "startinsert" $noteFilename
+printf '\n\n## %s\n\n' "$(date +%H:%M)" >> $filename
+
+vim -c "norm Go" -c "startinsert" $filename
