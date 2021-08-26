@@ -3,7 +3,9 @@
 filename="$HOME/vimwiki/diary/$(date +%Y-%m-%d).wiki"
 
 if [ ! -f $filename ]; then
-    printf '# Notes for %s' "$(date +%Y-%m-%d)" > $filename
+    printf '# Notes for %s\n' "$(date +%Y-%m-%d)" > $filename
+    lastfile=$(ls $HOME/vimwiki/diary/ | tail -n 2 | head -n 1)
+    printf 'Last note: [[%s]]' "$(basename $lastfile .wiki)" >> $filename
 fi
 
 printf '\n\n## %s\n\n' "$(date +%H:%M)" >> $filename
