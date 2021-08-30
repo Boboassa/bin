@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Dark Period mode can be toggled, and does 3 things when active:
+# [ ] sets color temperature to the lowest setting using xsct if it's installed,
+#     falling back to scp if it's not
+# [ ] sets the picom shader to grayscale to improve legibility and contrast
+# [ ] sets the current wallpaper to greyscale
+
+usage() {
+cat << EOF
+Usage: ${0##*/} [options]
+Options:
+    -g  greyscale only
+    -t  temperature only
+    -b  background only
+EOF
+}
+
+main() {
+usage
+}
+
+main
