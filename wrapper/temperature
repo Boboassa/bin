@@ -61,19 +61,19 @@ case ${1#-} in
     h)
         usage
         ;;
-    t)
-        if [ "$temp" -gt "$SCT_TEMP_LOW" ] ; then
-            temp=$SCT_TEMP_MIN
-            dunstify -C 1337 && \
-            dunstify -r 1337 "Dark period mode ON" \
-                "Temperature set to $temp"
-        else
-            temp=$SCT_TEMP_DEF
-            dunstify -C 1337 && \
-            dunstify -r 1337 "Dark period mode OFF" \
-                "Temperature set to $temp"
-        fi
-        ;;
+#    t)
+#        if [ "$temp" -gt "$SCT_TEMP_LOW" ] ; then
+#            temp=$SCT_TEMP_MIN
+#            dunstify -C 1337 && \
+#            dunstify -r 1337 "Dark period mode ON" \
+#                "Temperature set to $temp"
+#        else
+#            temp=$SCT_TEMP_DEF
+#            dunstify -C 1337 && \
+#            dunstify -r 1337 "Dark period mode OFF" \
+#                "Temperature set to $temp"
+#        fi
+#        ;;
     i)
         temp=$(( temp + ${2:-500} ))
         clamp
