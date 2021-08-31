@@ -6,14 +6,14 @@
 #
 
 usage() {
-printf 'Usage: %s [OPTION] NUM\n' "${0##*/}"
 cat <<EOF
-  [-h help] display this help message
-  [-d decrease] decrease temperature by NUM
-  [-i increase] increase temperature by NUM
-  [-t toggle] toggle dark period mode
-  [-s set] set temperature to NUM
-  no arguments sets color temperature to default
+Usage: ${0##*/} [OPTION] NUM
+  -h  help        display this help message
+  -d  decrease    decrease temperature by NUM
+  -i  increase    increase temperature by NUM
+  -s  set         set temperature to NUM
+  -p  print       print current temperature and exit
+  Passing no arguments sets color temperature to default
 EOF
 }
 
@@ -88,6 +88,10 @@ case ${1#-} in
         temp="$2"
         clamp
         notify
+        ;;
+    p)
+        echo "$temp"
+        exit 1
         ;;
     *)
         temp=$SCT_TEMP_DEF && notify
