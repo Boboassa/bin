@@ -5,14 +5,23 @@
 #     falling back to scp if it's not
 # [ ] sets the picom shader to grayscale to improve legibility and contrast
 # [ ] sets the current wallpaper to greyscale
+#
+# In order to make this script work you'll need:
+#     picom
+#     sct or xsct
+#     feh
+#     a couple of my other scripts:
+#         temperature
+#         background
+#
 
 usage() {
 cat << EOF
 Usage: ${0##*/} [options]
 Options:
-    -g  greyscale only
-    -t  temperature only
-    -b  background only
+    -c  toggle compositor greyscale only
+    -t  toggle screen temperature only
+    -b  toggle greyscale background only
 EOF
 }
 
