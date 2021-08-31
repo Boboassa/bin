@@ -16,8 +16,36 @@ Options:
 EOF
 }
 
-main() {
-usage
+toggle_comp() {
+if pgrep -a -x picom | grep glx-fshader-win > /dev/null ; then
+    pkill -x picom
+    sleep 1
+    picom -b
+    mode="color"
+else
+    pkill -x picom
+    sleep 1
+    shader="uniform sampler2D tex; uniform float opacity; void main() { vec4 c = texture2D(tex, gl_TexCoord[0].xy); float y = dot(c.rgb, vec3(0.2126, 0.7152, 0.0722)); gl_FragColor = opacity*vec4(y, y, y, c.a); }"
+    picom -b --backend glx --glx-fshader-win "${shader}" 2> /dev/null
+    mode="grayscale"
+fi
 }
 
-main
+case ${1#-} in
+    h)
+        usage
+        exit 0
+        ;;
+    c)
+        toggle_comp
+        ;;
+    b)
+        toggle_bg
+        ;;
+    t)
+        toggle_temp
+        ;;
+esac
+
+
+
