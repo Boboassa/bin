@@ -17,7 +17,7 @@
 
 usage() {
 cat << EOF
-Usage: ${0##*/} [options]
+Usage: ${0##*/} [OPTION]
 Options:
     -c  toggle compositor greyscale only
     -t  toggle screen temperature only
@@ -40,6 +40,10 @@ else
 fi
 }
 
+toggle_temp() {
+    [ $(temperature -p) -ge 1001 ] && temperature -s 700 || temperature
+}
+
 case ${1#-} in
     h)
         usage
@@ -54,6 +58,10 @@ case ${1#-} in
     t)
         toggle_temp
         ;;
+    *)
+        toggle_comp
+        toggle_bg
+        toggle_temp
 esac
 
 
