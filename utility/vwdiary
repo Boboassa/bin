@@ -18,6 +18,15 @@ if [ ! -f $filename ]; then
     printf 'Last note: [[%s]]\n' "$(basename $lastfile .wiki)" >> $filename
 fi
 
-printf '\n\n## %s\n\n' "$(date +%H:%M)" >> $filename
-
-vim -c "norm Go" -c "startinsert" $filename
+case ${1#-} in
+    h)
+        usage
+        exit 1
+        ;;
+    v)
+        vim -c "norm G" $filename
+        ;;
+    *)
+        printf '\n\n## %s\n\n' "$(date +%H:%M)" >> $filename
+        vim -c "norm Go" -c "startinsert" $filename
+esac
