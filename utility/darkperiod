@@ -19,9 +19,10 @@ usage() {
 cat << EOF
 Usage: ${0##*/} [OPTION]
 Options:
-    -c  toggle compositor greyscale only
-    -t  toggle screen temperature only
-    -b  toggle greyscale background only
+    -h  help            display this help message
+    -c  compositor      toggle compositor greyscale only
+    -t  temperature     toggle screen temperature only
+    -b  background      toggle greyscale background only
 EOF
 }
 

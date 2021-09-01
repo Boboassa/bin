@@ -1,5 +1,14 @@
 #!/bin/sh
 
+usage() {
+cat << EOF
+Usage: ${0##*/} [OPTION]
+Options:
+    -h  help            display this help message
+    -v  view            view note without editing and entering lines with time
+EOF
+}
+
 diarydir="$HOME/vimwiki/diary"
 filename="$diarydir/$(date +%Y-%m-%d).wiki"
 
