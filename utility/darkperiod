@@ -90,6 +90,10 @@ case ${1#-} in
 
       # if background is grayscale set it to normal background
         wllppr
+        ;;
+    *)
+        usage
+        exit 1
 esac
 
 
