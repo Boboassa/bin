@@ -25,7 +25,6 @@ Options:
     -d  deactivate      turn dark period mode off setting everything to default
     -c  compositor      toggle compositor greyscale only
     -t  temperature     toggle screen temperature only
-    -b  background      toggle greyscale background only
 EOF
 }
 
@@ -64,9 +63,6 @@ case ${1#-} in
     c)
         toggle_comp
         ;;
-    b)
-        # toggle_bg
-        ;;
     t)
         toggle_temp
         ;;
@@ -80,6 +76,8 @@ case ${1#-} in
         fi
 
       # if background is colored set it to grayscale
+        convert "${XDG_CACHE_HOME:-${HOME}/.cache}"/wallpaper -set colorspace Grey -separate -average /tmp/graywall
+        wllppr -t /tmp/graywall
         ;;
     d)
       # if temperature is low set it to default value
@@ -91,6 +89,7 @@ case ${1#-} in
         fi
 
       # if background is grayscale set it to normal background
+        wllppr
 esac
 
 
