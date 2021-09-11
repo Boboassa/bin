@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# A wallpaper setter for X
+#
+
+usage() {
+cat << EOF
+Usage: ${0##*/} [OPTION] [FILE]
+Options:
+    -h help             display this help message
+    -t temporary        set wallpaper only temporarily, until the next X restart
+    calling the program with no option sets the cached wallpaper
+EOF
+}
+
+set_wallpaper() {
+    if [ -f $file ] ; then
+        feh --no-fehbg --bg-fill $file
+    else
+        echo No file in cahce dir, specify a file without -t option to create one
+        echo
+        usage
+        exit 2
+    fi
+}
+
+copy_to_cache() {
+    if [ -f $file ] ; then
+        cp $file "${XDG_CACHE_HOME:-${HOME}/.cache}"/wallpaper
+    else
+        echo Invalid file name
+        echo
+        usage
+        exit 1
+    fi
+}
+
+file="${XDG_CACHE_HOME:-${HOME}/.cache}"/wallpaper
+
+if [ -z "$1" ] ; then
+    set_wallpaper
+else
+    case ${1#-} in
+        h)
+            usage
+            ;;
+        t)
+            file="$2"
+            set_wallpaper
+            ;;
+        *)
+            file="$1"
+            copy_to_cache
+            set_wallpaper
+    esac
+fi
+
+unset file
