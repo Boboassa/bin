@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# A quote program that reads itself as a text file to get quotes
+# Use % in the quotes to make a new line
+
+tail "$0" -n+8 | shuf -n 1 | sed -e 's/^..//' -e 's/\%/\n/g'
+
+# Give a man a fish and you've fed him for a day,%teach a man how to fish and you've fed him for the rest of his life
+# Be tolerant with others and strict with yourself
