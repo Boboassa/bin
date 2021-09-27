@@ -15,9 +15,9 @@ usage(){
 
 # Should probably be its own script... but, oh well...
 build(){
-    cd ~/repos/my-st/st && sudo make clean install
+    cd ~/repos/st && sudo make clean install
     cd -
-    cd ~/repos/my-dwm/dwm && sudo make clean install
+    cd ~/repos/dwm && sudo make clean install
     cd -
 }
 
@@ -118,6 +118,8 @@ set index-active-fg "$foreground"
 
 set render-loading-bg "$background"
 set render-loading-fg "$foreground"
+set default-bg "$background"
+set recolor-lightcolor "$background"
 EOF
 }
 
