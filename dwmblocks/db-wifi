@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Wifi status script for dwmblocks
+#
+
+status=$(iwctl station wlan0 show | grep 'State' | sed -e 's/ //g' -e 's/State//g')
+network=$(iwctl station wlan0 show | grep 'Connected network' | sed -e 's/ //g' -e 's/Connectednetwork//g')
+
+case $status in
+    "connected") status="直" ;;
+    "disconnected") status="睊" ;;
+    "connecting") status="痢" ;;
+esac
+
+printf '%s %s' "$status" "$network"
