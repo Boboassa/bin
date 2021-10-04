@@ -5,5 +5,7 @@
 
 tail "$0" -n+8 | shuf -n 1 | sed -e 's/^..//' -e 's/\%/\n/g'
 
-# Give a man a fish and you've fed him for a day,%teach a man how to fish and you've fed him for the rest of his life
+# Give a man a fish and you've fed him for a day,%teach a man how to fish and you've fed him%for the rest of his life
 # Be tolerant with others and strict with yourself
+# Some things are within our power, while others are not.%Within our power are opinion, motivation, desire,%and in a word, whatever is of our own doing;%not within our power are our body, our property, reputation,%and in a word, whatever is not of our own doing
+# If you have thr right idea about what really belongs to%you and what does now, you will never be subject to force or hinderance,%you will never blame or criticize anyone,%and everything you do will be done willingly
