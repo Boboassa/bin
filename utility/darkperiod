@@ -37,7 +37,7 @@ color_comp() {
 grayscale_comp() {
     pkill -x picom
     sleep .1
-    shader="uniform sampler2D tex; uniform float opacity; void main() { vec4 c = texture2D(tex, gl_TexCoord[0].xy); float y = dot(c.rgb, vec3(0.5, 0.5, 0.5)); gl_FragColor = opacity*vec4(y, y, y, c.a); }"
+    shader="uniform sampler2D tex; uniform float opacity; void main() { vec4 c = texture2D(tex, gl_TexCoord[0].xy); float y = dot(c.rgb, vec3(0.3, 0.3, 0.3)); gl_FragColor = opacity*vec4(y, y, y, c.a); }"
     picom -b --backend glx --glx-fshader-win "${shader}" 2> /dev/null
 }
 
@@ -66,7 +66,7 @@ case ${1#-} in
         ;;
     a)
       # if temperature is high set it to lowest value
-        [ $(temperature -p) -ge 1100 ] && temperature -s 700
+        xsct 700
 
       # if compositor is grayscale don't set it to grayscale again
         if ! pgrep -a -x picom | grep glx-fshader-win > /dev/null ; then
@@ -79,7 +79,7 @@ case ${1#-} in
         ;;
     d)
       # if temperature is low set it to default value
-        [ $(temperature -p) -lt 1100 ] && temperature
+        temperature
 
       # if compositor is grayscale set it to default colors
         if pgrep -a -x picom | grep glx-fshader-win > /dev/null ; then
