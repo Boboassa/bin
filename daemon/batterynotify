@@ -20,25 +20,27 @@ oldcapacity="a"
 while : ; do
     capacity=$(cat /sys/class/power_supply/BAT0/capacity)
     status=$(cat /sys/class/power_supply/BAT0/status)
-    if [ $status != $oldstatus ] || [ $capacity != $oldcapacity ] ; then
+    if [ "$status" != "$oldstatus" ] || [ "$capacity" != "$oldcapacity" ] ; then
 
         case $status in
             Discharging)
-                [ $capacity -le $battcritical ] && \
-                notify-send "Critically low battery" \
-                  "Only $capacity% of battery left" || \
-                [ $capacity -le $battlow ] && \
-                notify-send "Low battery" "Only $capacity% of battery left"
+                if [ "$capacity" -le $battcritical ] ; then
+                    notify-send "Critically low battery" \
+                        "Only $capacity% of battery left"
+                elif [ "$capacity" -le $battlow ] ; then
+                    notify-send --urgency=critical "Low battery" \
+                        "Only $capacity% of battery left!"
+                fi
             ;;
             Charging)
-                [ $capacity -ge $battfull ] && \
+                [ "$capacity" -ge $battfull ] && \
                 notify-send "Battery full" "Disconnect from charger"
         esac
 
         oldstatus=$status
         oldcapacity=$capacity
 
-        kill -41 $(pidof dwmblocks)
+        kill -41 "$(pidof dwmblocks)"
     fi
     sleep $interval
 done
