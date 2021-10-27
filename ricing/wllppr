@@ -14,8 +14,8 @@ EOF
 }
 
 set_wallpaper() {
-    if [ -f $file ] ; then
-        feh --no-fehbg --bg-fill $file
+    if [ -f "$file" ] ; then
+        feh --no-fehbg --bg-fill "$file"
     else
         echo No file in cahce dir, specify a file without -t option to create one
         echo
@@ -25,8 +25,8 @@ set_wallpaper() {
 }
 
 copy_to_cache() {
-    if [ -f $file ] ; then
-        cp $file "${XDG_CACHE_HOME:-${HOME}/.cache}"/wallpaper
+    if [ -f "$file" ] ; then
+        cp "$file" "${XDG_CACHE_HOME:-${HOME}/.cache}"/wallpaper
     else
         echo Invalid file name
         echo
