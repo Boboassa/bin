@@ -34,5 +34,5 @@ case ${1#-} in
 esac
 
 # kill dwmblocks volume process to update the status bar
-kill -43 $(pidof dwmblocks)
+kill -43 "$(pidof dwmblocks)"
 
