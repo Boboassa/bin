@@ -25,10 +25,10 @@ while : ; do
         case $status in
             Discharging)
                 if [ "$capacity" -le $battcritical ] ; then
-                    notify-send "Critically low battery" \
+                    notify-send --urgency=critical "Low battery" \
                         "Only $capacity% of battery left"
                 elif [ "$capacity" -le $battlow ] ; then
-                    notify-send --urgency=critical "Low battery" \
+                    notify-send "Low battery" \
                         "Only $capacity% of battery left!"
                 fi
             ;;
