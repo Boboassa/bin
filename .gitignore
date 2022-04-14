@@ -1,2 +1,15 @@
 # Private stuff
 aliases/*
+
+# Python stuff that I don't know how to remove
+f2py
+f2py3
+f2py3.10
+fonttools
+pip
+pip3
+pip3.10
+pyftmerge
+pyftsubset
+ttx
+wheel
