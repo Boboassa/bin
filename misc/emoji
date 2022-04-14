@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# A quote program that reads itself as a text file to get quotes
+# Use % in the quotes to make a new line
+
+tail "$0" -n+8 | sed -e 's/# //' | fzfmenu | sed -z 's/\n//g' | xclip -selection clipboard
+
+# ( ͡° ͜ʖ ͡° )
+# ¯\_(ツ)_/¯
+# (ツ)
+# -_-
