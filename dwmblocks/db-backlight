@@ -1,4 +1,4 @@
 #!/bin/bash
 # Backlight script for dwmblocks
 level="$(xbacklight -get)"
-printf " ${level%%.*}%%"
+printf 'BL %s' "${level%%.*}"

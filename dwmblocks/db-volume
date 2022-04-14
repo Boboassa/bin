@@ -7,18 +7,27 @@ volume="$(pamixer --get-volume)"
 status="$(pamixer --get-mute)"
 
 if [ "$status" = true ]; then
-    icon="ﱝ"
     volume="--"
-elif [ "$volume" -lt "10" ] ; then
-    icon="奄"
-    [ "$volume" -eq "0" ] && icon="ﱝ"
-    volume=0$volume
-elif [ "$volume" -lt "40" ]; then
-    icon="奔"
-else
-    icon="墳"
 fi
 
+#if [ "$volume" -lt "33" ] ; then
+    #icon="[VOL_]"
+    #[ "$volume" -lt "10" ] && icon="[MUTE]" && volume="0$volume"
+#elif [ "$volume" -lt "66" ]; then
+    #icon="[VOL-]"
+#else
+    #icon="[VOL^]"
+#fi
+#
+#if [ "$volume" -gt "99" ] ; then
+    #volume="99"
+#fi
 
-printf '%s %s%%' "$icon" "$volume"
+[ "$volume" -lt "66" ] && icon="VOL-" || icon="VOL^"
+[ "$volume" -lt "33" ] && icon="VOL_"
+[ "$volume" -lt "10" ] && volume=" $volume"
+[ "$volume" -eq "0" ] && icon="MUTE"
+[ "$volume" -gt "99" ] && volume=99
+
+printf '%s %s' "$icon" "$volume"
 #echo "$icon $volume%"

@@ -3,4 +3,4 @@
 
 date="$(date '+%a %d %b')"
 
-printf ' %s' "$date"
+printf '[DATE] %s' "$date"

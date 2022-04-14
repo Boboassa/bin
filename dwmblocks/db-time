@@ -3,4 +3,4 @@
 
 time="$(date '+%R')"
 
-printf ' %s' "$time"
+printf '%s' "$time"

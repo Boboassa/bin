@@ -8,8 +8,9 @@ network=$(iwctl station wlan0 show | grep 'Connected network' | \
     sed -e 's/ //g;s/Connectednetwork//g')
 
 case $status in
-    "connected") status="直 " ;;
-    "disconnected") status="睊" ;;
+    "connected") status="WIFI " ;;
+    "disconnected") status="DISC" ;;
+    *) status="$(echo "$status" | cut -c -4 | tr "[:lower:]" "[:upper:]") " ;;
 esac
 
 printf '%s%s' "$status" "$network"
