@@ -25,6 +25,7 @@ build(){
 
 gen_st() {
 cat > "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/st-color.h << EOF
+float alpha = $stalpha;
 static const char *colorname[] = {
     "$color0", // color 0
     "$color1", // color 1
@@ -61,7 +62,7 @@ static const char background[]        = "$background";
 static const char selectedbg[]        = "$selbg";
 static const char selectedfg[]        = "$selfg";
 static const char border[]            = "$border";
-static const unsigned int baralpha    = 0x80;
+static const unsigned int baralpha    = $dwmalpha;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]        = {
     /*               fg         bg         border   */
