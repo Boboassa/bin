@@ -6,9 +6,6 @@ volume="$(pamixer --get-volume)"
 
 status="$(pamixer --get-mute)"
 
-if [ "$status" = true ]; then
-    volume="--"
-fi
 
 #if [ "$volume" -lt "33" ] ; then
     #icon="[VOL_]"
@@ -28,6 +25,7 @@ fi
 [ "$volume" -lt "10" ] && volume=" $volume"
 [ "$volume" -eq "0" ] && icon="MUTE"
 [ "$volume" -gt "99" ] && volume=99
+[ "$status" = true ] && icon="MUTE"
 
 printf '%s %s' "$icon" "$volume"
 #echo "$icon $volume%"
