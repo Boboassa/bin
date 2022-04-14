@@ -3,29 +3,51 @@
 # "Apple Bright" from xcolors.net
 #
 
+# transparency
+stalpha="1"
+dwmalpha="0xff"
+
+# special
 foreground="#1b0b10"
 background="#ccbbb0"
 
+# cursor
 cursor="#82354f"
 invcursor="#1b0b10"
 
+# other
 selbg="#ccbbb0"
 selfg="#82354f"
 
+# black
 color0="#1b0b10"
 color8="#241016"
+
+# red
 color1="#82354f"
 color9="#b33e65"
+
+# green
 color2="#803466"
 color10="#b33e8c"
+
+# yellow
 color3="#4f3480"
 color11="#673eb3"
+
+# blue
 color4="#346580"
 color12="#3e8ab3"
+
+# magenta
 color5="#348068"
 color13="#3eb38c"
+
+# cyan
 color6="#6e804d"
 color14="#9ab36b"
+
+# white
 color7="#b3a49a"
 color15="#ccbbb0"
 

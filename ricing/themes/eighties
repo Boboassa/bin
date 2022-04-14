@@ -3,15 +3,21 @@
 # "Eighties" from terminal.sexy
 #
 
+# transparency
+stalpha="1"
+dwmalpha="0xff"
+
 # special
 foreground="#515151"
 background="#000000"
 
-selfg="#f2777a"
-selbg="#f2f0ec"
-
+# cursor
 cursor="#f2777a"
 invcursor="#2d2d2d"
+
+# other
+selfg="#f2777a"
+selbg="#f2f0ec"
 
 # black
 color0="#2d2d2d"

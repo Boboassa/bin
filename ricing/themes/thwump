@@ -1,15 +1,25 @@
-#/bin/sh
+#!/bin/sh
 #
 # "Thwump" from xcolors.net
 #
 
-# main
+# transparency
+stalpha="1"
+dwmalpha="0xff"
+
+# special
+foreground="#d8dee9"
+background="#2e3440"
 
 # cursor
+cursor="#e5e9f0"
+invcursor="#3b4252"
 
-# additional
+# other
+selbg="#2e3440"
+selfg="#8fbcbb"
 
-# black + grey
+# black
 color0="#202020"
 color8="#505050"
 
@@ -37,6 +47,7 @@ color13="#d070d0"
 color6="#70a0a0"
 color14="#70d0d0"
 
-# light gray + white
+# white
 color7="#a0a0a0"
 color15="#f0f0f0"
+
