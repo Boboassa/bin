@@ -15,9 +15,9 @@ usage(){
 
 # Should probably be its own script... but, oh well...
 build(){
-    cd ~/repos/st && sudo make clean install
+    cd ~/repos/st/laptop && sudo make clean install
     cd -
-    cd ~/repos/dwm && sudo make clean install
+    cd ~/repos/dwm/laptop && sudo make clean install
     cd -
 }
 
