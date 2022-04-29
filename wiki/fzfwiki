@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# <++>
+#
+
+usage() {
+cat << EOF
+Usage: ${0##*/} [OPTION]
+
+Without options the program launches fzf to look for a wiki page and opens it in VIM
+
+Options:
+    -h  help            display this help message
+    -v  view            open the note in readonly mode
+    -a  append          open the note, move to last line and enter insert mode
+EOF
+}
+
+
+# Change directory to wiki directory
+cd ~/wiki || return
+
+# Fuzzy-find the appropriate file
+file="$(find ./*.wiki | fzf)"
+
+# If the file does not exist (or no file selected) exit
+[ -f "$file" ] || exit 1
+
+case ${1#-} in
+    h)
+        usage
+        exit 1
+        ;;
+    v)
+        vim -R "$file"
+        ;;
+    a)
+        vim -c "norm Go" -c "startinsert" "$file"
+        ;;
+    *)
+        vim "$file"
+esac
