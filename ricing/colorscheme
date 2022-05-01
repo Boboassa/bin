@@ -9,16 +9,16 @@
 # functionalities, some parts are copied
 
 usage(){
-    >&2 printf 'Usage: %s [-h help] [schemefile]\n' "${0##*/}"
+    >&2 printf "Usage: %s [-h help] [-n no-install only generate files] [schemefile]\n" "${0##*/}"
     exit 1
 }
 
 # Should probably be its own script... but, oh well...
 build(){
     cd ~/repos/st/laptop && sudo make clean install
-    cd -
+    cd - || return
     cd ~/repos/dwm/laptop && sudo make clean install
-    cd -
+    cd - || return
 }
 
 # generate the different header and config files
@@ -124,10 +124,19 @@ set recolor-lightcolor "$background"
 EOF
 }
 
+gen_mpv() {
+cat > "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/mpv-color << EOF
+background="$background"
+osd-color="$foreground"
+osd-border-color="$background"
+EOF
+}
+
 gen_files() {
     gen_st
     gen_dwm
     gen_zathura
+    gen_mpv
 #    gen_qutebrowser
 #    gen_startpage
 }
@@ -147,6 +156,18 @@ case ${1#-} in
 #    i)
 #        interactive
 #        ;;
+    n)
+        if [ -f $HOME/.local/bin/ricing/themes/"$2" ] ; then
+            . $HOME/.local/bin/ricing/themes/"$2"
+
+            [ ! -d $XDG_CACHE_HOME/themes/ ] && \
+            mkdir -pv "${XDG_CACHE_HOME:-${HOME}/.cache}"/themes/
+
+            gen_files
+        else
+            usage
+        fi
+        ;;
     *)
         if [ -f $HOME/.local/bin/ricing/themes/"$1" ] ; then
             . $HOME/.local/bin/ricing/themes/"$1"
