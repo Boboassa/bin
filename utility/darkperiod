@@ -50,7 +50,8 @@ fi
 }
 
 toggle_temp() {
-    [ $(temperature -p) -ge 1100 ] && temperature -s 700 || temperature
+    [ "$(temperature -p)" -ge 1100 ] && temperature -s 700
+    [ "$(temperature -p)" -ge 1100 ] || temperature
 }
 
 case ${1#-} in
