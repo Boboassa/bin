@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# A script to view a random entry in a directory, in my particular case it's
+# used to read and correct a random entry in my personal wiki
+#
+
+usage() {
+cat << EOF
+Usage: ${0##*/}
+
+Running the command with no options opens a random file with vim
+
+-v     open file in readonly mode
+-a     append into file by going to last line and enter insert mode
+-h     print this help message
+EOF
+}
+
+
+# Change directory to wiki directory
+cd ~/wiki || return
+
+# Radnomly select a file
+file="$(find ./*.wiki | shuf -n 1)"
+
+# If the file does not exist (or no file selected) exit
+[ -f "$file" ] || exit 1
+
+case ${1#-} in
+    h)
+        usage
+        exit 1
+        ;;
+    v)
+        vim -R "$file"
+        ;;
+    a)
+        vim -c "norm Go" -c "startinsert" "$file"
+        ;;
+    *)
+        vim "$file"
+esac
