@@ -4,22 +4,39 @@
 #
 
 usage() {
-printf 'Usage: %s [-h help] [-o open] [-]\n' "new"
+printf 'Usage: %s [OPTION]... FILE\n' "${0##*/}"
+cat <<EOF
+  -h          display this help message
+  --pdf       open a pdf with zatura
+  --program   launch a program
+  --bookmark  open a bookmark in the browser
+EOF
 }
+
+open_pdf() {
+    file="$(find -type f -wholename '*documents/*.pdf' | sort -u | fzfmenu)"
+    [ -f "$file" ] && zathura $file
+}
+
+open_program() {
+    exec "$(compgen -c | sort -u | fzfmenu)"
+}
+
 main() {
-    case "${1#-}" in
-        h)
-            usage
-            ;;
-        o)
-            open
-            ;;
-
-    esac
-}
-
-open() {
-    exec $(compgen -c | sort -u | fzfmenu)
+case "${1#--}" in
+    pdf)
+        open_pdf
+        ;;
+    program)
+        open_program
+        ;;
+    bookmark)
+        open_bookmark
+        ;;
+    *)
+	usage
+	exit 1
+esac
 }
 
 main "$1"
