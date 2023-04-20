@@ -1,0 +1,52 @@
+#!/bin/sh
+#
+# nord theme
+#
+
+# transparency
+stalpha="1"
+dwmalpha="0xff"
+
+# special
+foreground="#c3c3d9"
+background="#1c1f3b"
+
+# cursor
+cursor="#c3c3d9"
+invcursor="#1c1f3b"
+
+# other
+selbg="#1c1f3b"
+selfg="#a358df"
+
+# black
+color0="#1a2640"
+color8="#4b4b73"
+
+# red
+color1="#fa3e74"
+color9="#fb275d"
+
+# green
+color2="#28c98e"
+color10="#00ca72"
+
+# yellow
+color3="#ffd633"
+color11="#ffcc00"
+
+# blue
+color4="#2f87eb"
+color12="#0073ea"
+
+# magenta
+color5="#ac6fde"
+color13="#a358df"
+
+# cyan
+color6="#ff73d5"
+color14="#ff5ac4"
+
+# white
+color7="#bfbfbf"
+color15="#ffffff"

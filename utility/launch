@@ -15,7 +15,7 @@ EOF
 
 open_pdf() {
     file="$(find -type f -wholename '*documents/*.pdf' | sort -u | fzfmenu)"
-    [ -f "$file" ] && zathura $file
+    [ -f "$file" ] && zathura "$file"
 }
 
 open_program() {

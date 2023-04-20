@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# A program launcher with fzfmenu
+#
+
+exec $(compgen -c | sort -u | fzfmenu)
